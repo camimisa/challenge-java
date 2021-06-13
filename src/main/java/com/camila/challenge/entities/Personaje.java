@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
 
 @Entity
 @Table(name = "personaje")
@@ -39,7 +41,7 @@ public class Personaje {
 	@Column(name = "historia", nullable=false)
 	private String historia;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "personaje_pelicula",
 		joinColumns = {@JoinColumn(name = "id_personaje", nullable = false)},
@@ -142,6 +144,14 @@ public class Personaje {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Personaje [idPersonaje=" + idPersonaje + ", nombre=" + nombre + ", imagen=" + imagen + ", edad=" + edad
+				+ ", peso=" + peso + ", historia=" + historia + ", peliculas=" + peliculas + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
 	}
 	
 	

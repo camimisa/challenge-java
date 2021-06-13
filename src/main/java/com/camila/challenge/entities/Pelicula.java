@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,15 +31,18 @@ public class Pelicula {
 	@Column(name = "imagen", nullable=false)
 	private String imagen;
 	
+	@Column(name = "calificacion", nullable=false)
+	private int calificacion;
+	
 	@Column(name = "fecha", nullable=false)
 	private LocalDate fecha;
-	
-	@ManyToMany(mappedBy = "peliculas")
-	private Set<Personaje> personajes;
 	
     @ManyToOne()
     @JoinColumn(name = "id_genero")
     private Genero genero;
+    
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="peliculas")
+	private Set<Personaje> personajes;
 	
 	@Column(name="createdat")
 	@CreationTimestamp
@@ -49,6 +53,20 @@ public class Pelicula {
 	private LocalDateTime updatedAt;
 
 	public Pelicula() {}
+	
+	
+	public Pelicula(int idPelicula, String titulo, String imagen, int calificacion, LocalDate fecha, Genero genero, Set<Personaje> personajes) {
+		super();
+		this.idPelicula = idPelicula;
+		this.titulo = titulo;
+		this.imagen = imagen;
+		this.calificacion = calificacion;
+		this.fecha = fecha;
+		this.genero = genero;
+		this.personajes = personajes;
+	}
+
+
 	public int getIdPelicula() {
 		return idPelicula;
 	}
@@ -81,14 +99,6 @@ public class Pelicula {
 		this.fecha = fecha;
 	}
 
-	public Set<Personaje> getPersonajes() {
-		return personajes;
-	}
-
-	public void setPersonajes(Set<Personaje> personajes) {
-		this.personajes = personajes;
-	}
-
 	public Genero getGenero() {
 		return genero;
 	}
@@ -112,7 +122,20 @@ public class Pelicula {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	public int getCalificacion() {
+		return calificacion;
+	}
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
+	}
 	
+	public Set<Personaje> getPersonajes() {
+		return personajes;
+	}
+
+	public void setPersonajes(Set<Personaje> personajes) {
+		this.personajes = personajes;
+	}
 	
 	
 }

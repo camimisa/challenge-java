@@ -5,7 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.camila.challenge.converters.PeliculaConverter;
+import com.camila.challenge.converters.PersonajeConverter;
 import com.camila.challenge.entities.Pelicula;
+import com.camila.challenge.entities.Personaje;
+import com.camila.challenge.models.PeliculaModel;
+import com.camila.challenge.models.PersonajeModel;
 import com.camila.challenge.repositories.IPeliculaRepository;
 import com.camila.challenge.services.IPeliculaService;
 
@@ -16,14 +21,22 @@ public class PeliculaService implements IPeliculaService{
 	@Qualifier("peliculaRepository")
 	private IPeliculaRepository peliculaRepository;
 
+	@Autowired
+	@Qualifier("peliculaConverter")
+	private PeliculaConverter peliculaConverter;
+	
+	@Autowired
+	@Qualifier("personajeConverter")
+	private PersonajeConverter personajeConverter;
 	@Override
-	public List<Pelicula> getAll() {
-		return peliculaRepository.findAll();
+	public List<PeliculaModel> getAll() {
+		return peliculaConverter.entidadAModelo(peliculaRepository.findAll());
 	}
 
 	@Override
-	public Pelicula insertOrUpdate(Pelicula object) {
-		return peliculaRepository.save(object);
+	public PeliculaModel insertOrUpdate(PeliculaModel object) {
+		Pelicula pelicula = peliculaConverter.modeloAEntidad(object);
+		return peliculaConverter.entidadAModelo(pelicula);
 	}
 
 	@Override
@@ -38,27 +51,29 @@ public class PeliculaService implements IPeliculaService{
 	}
 
 	@Override
-	public Pelicula findById(int id) {
-		return peliculaRepository.findByIdPelicula(id);
+	public PeliculaModel findById(int id) {
+		return peliculaConverter.entidadAModelo(peliculaRepository.findByIdPelicula(id));
 	}
 
 	@Override
-	public Pelicula findByTitulo(String titulo) {
-		return peliculaRepository.findByTitulo(titulo);
+	public PeliculaModel findByTitulo(String titulo) {
+		return peliculaConverter.entidadAModelo(peliculaRepository.findByTitulo(titulo));
 	}
 
 	@Override
-	public List<Pelicula> findAllByFechaASC() {
-		return peliculaRepository.findAllByFechaASC();
+	public List<PeliculaModel> findAllByFechaASC() {
+		return peliculaConverter.entidadAModelo(peliculaRepository.findAllByFechaASC());
 	}
 
 	@Override
-	public List<Pelicula> findAllByFechaDESC() {
-		return peliculaRepository.findAllByFechaDESC();
+	public List<PeliculaModel> findAllByFechaDESC() {
+		return peliculaConverter.entidadAModelo(peliculaRepository.findAllByFechaDESC());
 	}
 
 	@Override
-	public List<Pelicula> findAllByGenero(int id) {
-		return peliculaRepository.findAllByGenero(id);
+	public List<PeliculaModel> findAllByGenero(int id) {
+		return peliculaConverter.entidadAModelo(peliculaRepository.findAllByGenero(id));
 	}
+
+
 }

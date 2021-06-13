@@ -1,15 +1,19 @@
 package com.camila.challenge.services;
 
 import java.util.List;
+
+
 import com.camila.challenge.entities.Pelicula;
+import com.camila.challenge.models.PeliculaModel;
+import com.camila.challenge.models.PersonajeModel;
 
 public interface IPeliculaService {
-	public List<Pelicula>getAll();
-	public Pelicula insertOrUpdate(Pelicula object);
+	public List<PeliculaModel> getAll();
+	public PeliculaModel insertOrUpdate(PeliculaModel object);
 	public boolean remove(int id);
-	public Pelicula findById(int id);
-	public abstract Pelicula findByTitulo(String title);
-	public abstract List<Pelicula> findAllByFechaASC();
-	public abstract List<Pelicula> findAllByFechaDESC();
-	public abstract List<Pelicula> findAllByGenero(int id);
+	public PeliculaModel findById(int id);
+	public abstract PeliculaModel findByTitulo(String title);
+	public abstract List<PeliculaModel> findAllByFechaASC();
+	public abstract List<PeliculaModel> findAllByFechaDESC();
+	public abstract List<PeliculaModel> findAllByGenero(int id);
 }
