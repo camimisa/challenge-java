@@ -2,6 +2,9 @@ package com.camila.challenge.models;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -10,14 +13,18 @@ import com.fasterxml.jackson.annotation.JsonView;
 @JsonRootName(value = "Pelicula")
 public class PeliculaParcialModel {
 	@JsonView(PeliculaParcialModel.class)
+	@JsonIgnore
 	protected int idPelicula;
 	@JsonView(PeliculaParcialModel.class)
+	@NotNull
 	protected String titulo;
 	@JsonView(PeliculaParcialModel.class)
 	protected String imagenUrl;
 	@JsonProperty(access = Access.WRITE_ONLY)
+	@NotNull
 	protected String imagen;
 	@JsonView(PeliculaParcialModel.class)
+	@NotNull
 	protected LocalDate fecha;
 	
 	public PeliculaParcialModel() {}

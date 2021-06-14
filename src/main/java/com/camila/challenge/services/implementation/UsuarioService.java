@@ -8,7 +8,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.camila.challenge.entities.Rol;
 import com.camila.challenge.entities.Usuario;
 import com.camila.challenge.repositories.IUsuarioRepository;
 import com.camila.challenge.services.IUsuarioService;
@@ -77,11 +75,6 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		return new User(usuario.getEmail(), usuario.getClave(), buildGrantedAuthorities());
 	}
 	
-	private User buildUser(Usuario usuario, List<GrantedAuthority> grantedAuthorities) {
-		return new User(usuario.getEmail(), usuario.getClave(), usuario.isEnabled(),
-						true, true, true, //accountNonExpired, credentialsNonExpired, accountNonLocked,
-						grantedAuthorities);
-	}
 	
 	private List<GrantedAuthority> buildGrantedAuthorities() {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();

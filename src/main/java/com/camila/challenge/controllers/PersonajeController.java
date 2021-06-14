@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
@@ -71,19 +73,18 @@ public class PersonajeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PersonajeModel>create(@RequestBody PersonajeModel personaje){
+	public ResponseEntity<PersonajeModel>create(@Valid @RequestBody PersonajeModel personaje){
 		PersonajeModel personajeM = personajeService.insertOrUpdate(personaje);
 		System.out.println(personajeM.getIdPersonaje());
 		return new ResponseEntity<PersonajeModel>(personajeM,HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<PersonajeModel>update(@RequestBody PersonajeModel pelicula){
+	public ResponseEntity<PersonajeModel>update(@Valid @RequestBody PersonajeModel pelicula){
 		return new ResponseEntity<PersonajeModel>(personajeService.insertOrUpdate(pelicula),HttpStatus.OK);
 	}
 	
 	@GetMapping("{id}")
-	@JsonView(PersonajeModel.class)
 	public ResponseEntity<PersonajeModel>info(@PathVariable("id") int id){
 		PersonajeModel personaje = personajeService.findById(id);
 		System.out.println(personaje.getPeliculas());

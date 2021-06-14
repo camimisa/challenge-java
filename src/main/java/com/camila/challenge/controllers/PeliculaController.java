@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ByteArrayResource;
@@ -25,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.camila.challenge.models.PeliculaModel;
 import com.camila.challenge.models.PeliculaParcialModel;
 import com.camila.challenge.services.IPeliculaService;
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
@@ -83,17 +84,16 @@ public class PeliculaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PeliculaModel>create(@RequestBody PeliculaModel pelicula){
+	public ResponseEntity<PeliculaModel>create(@Valid @RequestBody PeliculaModel pelicula){
 		return new ResponseEntity<PeliculaModel>(peliculaService.insertOrUpdate(pelicula),HttpStatus.CREATED);
 	}
 	
 	@PutMapping
-	public ResponseEntity<PeliculaModel>update(@RequestBody PeliculaModel pelicula){
+	public ResponseEntity<PeliculaModel>update(@Valid @RequestBody PeliculaModel pelicula){
 		return new ResponseEntity<PeliculaModel>(peliculaService.insertOrUpdate(pelicula),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	@JsonView(PeliculaModel.class)
 	public ResponseEntity<PeliculaModel>info(@PathVariable("id") int idPelicula){
 		PeliculaModel pelicula = peliculaService.findById(idPelicula);
 		return new ResponseEntity<PeliculaModel>(pelicula,HttpStatus.OK);

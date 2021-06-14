@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.camila.challenge.entities.Pelicula;
 import com.camila.challenge.entities.Personaje;
 import com.camila.challenge.models.PeliculaModel;
+import com.camila.challenge.models.PeliculaParcialModel;
 import com.camila.challenge.models.PersonajeModel;
 
 @Component("personajeConverter")
@@ -21,12 +22,14 @@ public class PersonajeConverter {
 	@Qualifier("peliculaConverter")
 	private PeliculaConverter peliculaConverter;
 	
-	public PersonajeModel entidadAModelo(Personaje personaje) {
+	public PersonajeModel entidadAModelo(Personaje personaje, boolean esPersonaje) {
+		if(personaje == null)return null;
 		PersonajeModel personajeModel =  new PersonajeModel(personaje.getIdPersonaje(),personaje.getNombre(), personaje.getImagen(),
-				personaje.getEdad(), personaje.getPeso(), personaje.getHistoria(), null);
-		if(personaje.getPeliculas() == null)return personajeModel;
-		for(Pelicula p : personaje.getPeliculas()) {
-			personajeModel.getPeliculas().add(peliculaConverter.entidadAModelo(p));
+				personaje.getEdad(), personaje.getPeso(), personaje.getHistoria(), new HashSet<>());
+		if(esPersonaje) {
+			for(Pelicula p : personaje.getPeliculas()) {
+				personajeModel.getPeliculas().add(peliculaConverter.entidadAModelo(p,!esPersonaje));
+			}
 		}
 		return personajeModel;
 	}
@@ -34,30 +37,32 @@ public class PersonajeConverter {
 	public Set<PersonajeModel> entidadAModelo(Set<Personaje> personajes) {
 		Set<PersonajeModel> listaModels = new HashSet<PersonajeModel>();
 		for(Personaje p : personajes)
-			listaModels.add(this.entidadAModelo(p));
+			listaModels.add(this.entidadAModelo(p,true));
 		return listaModels;
 	}
 	
-	public Personaje modeloAEntidad(PersonajeModel personajeModel) {
+	public Personaje modeloAEntidad(PersonajeModel personajeModel, boolean esPersonaje) {
+		if(personajeModel == null)return null;
 		Personaje personaje = new Personaje(personajeModel.getIdPersonaje(),personajeModel.getNombre(), personajeModel.getImagen(),
-				personajeModel.getEdad(), personajeModel.getPeso(), personajeModel.getHistoria(), null);
+				personajeModel.getEdad(), personajeModel.getPeso(), personajeModel.getHistoria(), new HashSet<>());
+		if(esPersonaje) {
 		for(PeliculaModel p : personajeModel.getPeliculas())
-			personaje.getPeliculas().add(peliculaConverter.modeloAEntidad(p));
+			personaje.getPeliculas().add(peliculaConverter.modeloAEntidad(p,false));
+		}
 		return personaje;
 	}
 
 	public Set<Personaje> modeloAEntidad(Set<PersonajeModel> personajes) {
 		Set<Personaje> lista = new HashSet<Personaje>();
 		for(PersonajeModel p : personajes)
-			lista.add(this.modeloAEntidad(p));
+			lista.add(this.modeloAEntidad(p,true));
 		return lista;
 	}
 
 	public List<PersonajeModel> entidadAModelo(List<Personaje> personajes) {
 		List<PersonajeModel> listaModels = new ArrayList<PersonajeModel>();
 		for(Personaje p : personajes) {
-			p.setPeliculas(null);
-			listaModels.add(this.entidadAModelo(p));
+			listaModels.add(this.entidadAModelo(p,true));
 		}
 		return listaModels;
 	}

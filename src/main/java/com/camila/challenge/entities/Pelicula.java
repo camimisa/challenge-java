@@ -2,6 +2,7 @@ package com.camila.challenge.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -52,7 +53,9 @@ public class Pelicula {
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 
-	public Pelicula() {}
+	public Pelicula() {
+		this.personajes= new HashSet<>();
+	}
 	
 	
 	public Pelicula(int idPelicula, String titulo, String imagen, int calificacion, LocalDate fecha, Genero genero, Set<Personaje> personajes) {

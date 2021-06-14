@@ -1,11 +1,7 @@
 package com.camila.challenge.services;
 
 import java.util.List;
-
-
-import com.camila.challenge.entities.Pelicula;
 import com.camila.challenge.models.PeliculaModel;
-import com.camila.challenge.models.PersonajeModel;
 
 public interface IPeliculaService {
 	public List<PeliculaModel> getAll();

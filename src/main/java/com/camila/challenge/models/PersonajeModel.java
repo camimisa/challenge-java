@@ -2,19 +2,23 @@ package com.camila.challenge.models;
 
 import java.util.Set;
 
-import com.camila.challenge.entities.Pelicula;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonView;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PersonajeModel extends PersonajeParcialModel {
 
-	@JsonView(PersonajeModel.class)
+	@NotNull
+	@Min(1)
+	@Max(150)
 	private int edad;
-	@JsonView(PersonajeModel.class)
+	@NotNull
+	@Min(1)
 	private double peso;
-	@JsonView(PersonajeModel.class)
+	@NotNull
 	private String historia;
-	@JsonView(PersonajeModel.class)
 	private Set<PeliculaModel> peliculas;
 	
 	public PersonajeModel(int idPersonaje, String nombre, String imagen, int edad, double peso, String historia,
