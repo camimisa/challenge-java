@@ -1,17 +1,27 @@
 package com.camila.challenge.models;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+ @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class PeliculaModel extends PeliculaParcialModel{
 
     private GeneroModel genero;
+    @Min(1)
+    @Max(5)
+    @NotNull
     private int clasificacion;
+   
     private Set<PersonajeModel>personajes;
-	public PeliculaModel() {}
+	public PeliculaModel() {
+		this.personajes = new HashSet<>();
+	}
 
 	public PeliculaModel(int idPelicula, String titulo, LocalDate fecha, String imagen, int clasificacion, GeneroModel generoModel, Set<PersonajeModel> personajes) {
 		super(idPelicula,titulo,imagen,fecha);
@@ -44,7 +54,6 @@ public class PeliculaModel extends PeliculaParcialModel{
 		this.genero = genero;
 	}
 
-	@JsonView(PeliculaModel.class)
 	public Set<PersonajeModel> getPersonajes() {
 		return personajes;
 	}

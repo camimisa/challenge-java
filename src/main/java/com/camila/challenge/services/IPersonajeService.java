@@ -2,9 +2,6 @@ package com.camila.challenge.services;
 
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
-
-import com.camila.challenge.entities.Personaje;
 import com.camila.challenge.models.PersonajeModel;
 
 public interface IPersonajeService {

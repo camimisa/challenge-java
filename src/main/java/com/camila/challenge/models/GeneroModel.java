@@ -1,15 +1,16 @@
 package com.camila.challenge.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 @JsonRootName(value = "Genero")
 public class GeneroModel {
 
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private int idGenero;
 	private String nombre;
 	private String imagenUrl;
-	@JsonIgnore
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String image;
 	
 	public GeneroModel(int idGenero, String nombre, String image) {

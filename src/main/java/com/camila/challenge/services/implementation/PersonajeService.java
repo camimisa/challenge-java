@@ -29,8 +29,8 @@ public class PersonajeService implements IPersonajeService{
 
 	@Override
 	public PersonajeModel insertOrUpdate(PersonajeModel object) {
-		Personaje personaje = personajeConverter.modeloAEntidad(object);
-		return personajeConverter.entidadAModelo(personajeRepository.save(personaje));
+		Personaje personaje = personajeConverter.modeloAEntidad(object,true);
+		return personajeConverter.entidadAModelo(personajeRepository.save(personaje),true);
 	}
 
 	@Override
@@ -46,12 +46,12 @@ public class PersonajeService implements IPersonajeService{
 
 	@Override
 	public PersonajeModel findById(int id) {
-		return personajeConverter.entidadAModelo(personajeRepository.findByIdPersonaje(id));
+		return personajeConverter.entidadAModelo(personajeRepository.findByIdPersonaje(id),true);
 	}
 
 	@Override
 	public PersonajeModel findByNombre(String nombre) {
-		return personajeConverter.entidadAModelo(personajeRepository.findByNombre(nombre));
+		return personajeConverter.entidadAModelo(personajeRepository.findByNombre(nombre),true);
 	}
 
 	@Override
