@@ -3,6 +3,7 @@ package com.camila.challenge.services;
 import java.util.List;
 
 import com.camila.challenge.entities.Usuario;
+import com.sendgrid.Response;
 
 public interface IUsuarioService {
 
@@ -11,5 +12,6 @@ public interface IUsuarioService {
 	public List<Usuario> getAll();
 	public Usuario insertOrUpdate(Usuario usuario);
 	public boolean remove(int id);
+	public abstract Response sendEmail(String emailTo);
 
 }

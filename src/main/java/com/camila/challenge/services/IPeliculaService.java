@@ -2,6 +2,7 @@ package com.camila.challenge.services;
 
 import java.util.List;
 import com.camila.challenge.models.PeliculaModel;
+import com.camila.challenge.models.PersonajeModel;
 
 public interface IPeliculaService {
 	public List<PeliculaModel> getAll();
@@ -12,4 +13,6 @@ public interface IPeliculaService {
 	public abstract List<PeliculaModel> findAllByFechaASC();
 	public abstract List<PeliculaModel> findAllByFechaDESC();
 	public abstract List<PeliculaModel> findAllByGenero(int id);
+	public abstract boolean addCharacterToMovie(int idCharacter, int idMovie);
+	public abstract boolean addCharacterToMovie(PersonajeModel personajeModel, int idMovie);
 }

@@ -1,5 +1,6 @@
 package com.camila.challenge.models;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.Max;
@@ -20,6 +21,10 @@ public class PersonajeModel extends PersonajeParcialModel {
 	@NotNull
 	private String historia;
 	private Set<PeliculaModel> peliculas;
+	public PersonajeModel() {
+		this.peliculas = new HashSet<>();
+	}
+	
 	
 	public PersonajeModel(int idPersonaje, String nombre, String imagen, int edad, double peso, String historia,
 			Set<PeliculaModel> peliculas) {

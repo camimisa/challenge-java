@@ -11,14 +11,14 @@ public class GeneroModel {
 	private String nombre;
 	private String imagenUrl;
 	@JsonProperty(access = Access.WRITE_ONLY)
-	private String image;
+	private String imagen;
 	
 	public GeneroModel(int idGenero, String nombre, String image) {
 		super();
 		this.idGenero = idGenero;
 		this.nombre = nombre;
-		this.image = image;
-		this.setImagenUrl("/movies/genre/" + idGenero);
+		this.imagen = image;
+		this.setImagenUrl("/movies/genre/image/" + idGenero);
 	}
 
 	public int getIdGenero() {
@@ -37,12 +37,12 @@ public class GeneroModel {
 		this.nombre = nombre;
 	}
 
-	public String getImage() {
-		return image;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setImagen(String image) {
+		this.imagen = image;
 	}
 
 	public String getImagenUrl() {

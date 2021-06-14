@@ -139,6 +139,13 @@ public class Pelicula {
 	public void setPersonajes(Set<Personaje> personajes) {
 		this.personajes = personajes;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Pelicula [idPelicula=" + idPelicula + ", titulo=" + titulo + ", imagen=" + imagen + ", calificacion="
+				+ calificacion + ", fecha=" + fecha + "]";
+	}
 	
 	
 }

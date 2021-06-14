@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.camila.challenge.models.PeliculaModel;
 import com.camila.challenge.models.PeliculaParcialModel;
+import com.camila.challenge.models.PersonajeModel;
 import com.camila.challenge.services.IPeliculaService;
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -75,7 +76,7 @@ public class PeliculaController {
 	@GetMapping(value="genre/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public ResponseEntity<ByteArrayResource> imagenGenero(@PathVariable("id") int id) throws IOException {
 		final String path = "src/main/resources/static/imagenes/generos/";
-		final String imageName = peliculaService.findById(id).getGenero().getImage();
+		final String imageName = peliculaService.findById(id).getGenero().getImagen();
 		final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get((path + "" + imageName))));
 		return ResponseEntity
                 .status(HttpStatus.OK)
@@ -97,6 +98,19 @@ public class PeliculaController {
 	public ResponseEntity<PeliculaModel>info(@PathVariable("id") int idPelicula){
 		PeliculaModel pelicula = peliculaService.findById(idPelicula);
 		return new ResponseEntity<PeliculaModel>(pelicula,HttpStatus.OK);
+	}
+	
+	@PostMapping("/addCharacter/{id}")
+	public ResponseEntity<Boolean>addCharacter(@Valid @RequestBody PersonajeModel personaje ,@PathVariable("id") int idPelicula){
+		peliculaService.addCharacterToMovie(personaje, idPelicula);
+		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+	}
+	
+	@PostMapping("/addCharacter")
+	public ResponseEntity<Boolean>addCharacter(@RequestParam(name="idMovie", required = true) int idPelicula, 
+			@RequestParam(name="idCharacter", required = true) int idPersonaje){
+		peliculaService.addCharacterToMovie(idPersonaje, idPelicula);
+		return new ResponseEntity<Boolean>(true,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")

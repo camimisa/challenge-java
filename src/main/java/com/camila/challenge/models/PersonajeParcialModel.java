@@ -2,7 +2,6 @@ package com.camila.challenge.models;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 @JsonRootName(value = "Personaje")
 public class PersonajeParcialModel {
 	@JsonView(PersonajeParcialModel.class)
-	@JsonIgnore
 	protected int idPersonaje;
 	@JsonView(PersonajeParcialModel.class)
 	@NotNull
@@ -62,6 +60,31 @@ public class PersonajeParcialModel {
 
 	public void setImagenUrl(String imagenUrl) {
 		this.imagenUrl = imagenUrl;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonajeParcialModel other = (PersonajeParcialModel) obj;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		return true;
 	}
 	
 	

@@ -21,7 +21,7 @@ public class Genero {
 	private String nombre;
 	
 	@Column(name = "imagen", nullable=false)
-	private String image;
+	private String imagen;
     
 	@Column(name="createdat")
 	@CreationTimestamp
@@ -38,7 +38,7 @@ public class Genero {
 		super();
 		this.idGenero = idGenero;
 		this.nombre = nombre;
-		this.image = image;
+		this.imagen = image;
 	}
 
 
@@ -58,12 +58,12 @@ public class Genero {
 		this.nombre = nombre;
 	}
 
-	public String getImage() {
-		return image;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setImagen(String image) {
+		this.imagen = image;
 	}
 
 	public LocalDateTime getCreatedAt() {

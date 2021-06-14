@@ -1,5 +1,6 @@
 package com.camila.challenge.services.implementation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +19,14 @@ import org.springframework.stereotype.Service;
 import com.camila.challenge.entities.Usuario;
 import com.camila.challenge.repositories.IUsuarioRepository;
 import com.camila.challenge.services.IUsuarioService;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Personalization;
 
 @Service("usuarioService")
 public class UsuarioService implements UserDetailsService, IUsuarioService {
@@ -28,6 +37,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	@Autowired
 	@Qualifier("usuarioRepository")
 	private IUsuarioRepository usuarioRepository;
+	
+	@Autowired
+	SendGrid sendGrid;
 	
 	@Override
 	public Usuario findByEmail(String email) {
@@ -47,11 +59,13 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	@Override
 	public Usuario insertOrUpdate(Usuario usuario) {
 		usuario.setClave(encoder.encode(usuario.getClave()));
-		usuario.setEnabled(true);
-		if(this.findByEmail(usuario.getEmail()) == null)
-			usuario = usuarioRepository.save(usuario);
-		else
-			usuario = null;
+		usuario.setEnabled(true);System.out.println(usuario.getEmail());
+		if(this.findByEmail(usuario.getEmail()) == null) {
+			//usuario = usuarioRepository.save(usuario);
+		}
+		//else
+			//usuario = null;
+
 		return usuario;
 	}
 
@@ -80,5 +94,39 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
 		return new ArrayList<GrantedAuthority>(grantedAuthorities);
 	}
+	
+	@Override
+	public Response sendEmail(String to) {
+		Email fromEmail = new Email("garci4camila@yandex.ru");
+		Email toEmail = new Email(to);
+		String subject = "Gracias por inscribirte";
+		Content content = new Content("text/plain", "BIENVENIDO!");
+		System.out.println("holi");
+		Mail mail = new Mail(fromEmail, subject, toEmail, content);
+		mail.setReplyTo(fromEmail);
+
+		Request request = new Request();
+		Response response = null;
+
+		try {
+
+			request.setMethod(Method.POST);
+
+			request.setEndpoint("mail/send");
+
+			request.setBody(mail.build());
+
+			response=this.sendGrid.api(request);
+
+		} catch (IOException ex) {
+
+			System.out.println(ex.getMessage());
+
+		}
+		System.out.println(response.getBody());
+		return response;
+	}
+
+	
 
 }
