@@ -18,4 +18,5 @@ public interface IPersonajeRepository extends JpaRepository<Personaje, Serializa
 	public abstract List<Personaje> findByPeso(double peso);
 	@Query(value="select p from Personaje p join fetch p.peliculas pel where pel.idPelicula = :id")
 	public abstract List<Personaje> findByPelicula(@Param("id")int idPelicula);
+
 }

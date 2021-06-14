@@ -11,5 +11,5 @@ public interface IGeneroService {
 	public List<Genero>getAll();
 	public Genero insertOrUpdate(Genero object);
 	public boolean remove(int id);
-	Genero findById(int id);
+	public Genero findById(int id);
 }

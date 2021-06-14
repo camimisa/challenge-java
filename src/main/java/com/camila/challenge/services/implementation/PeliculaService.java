@@ -36,7 +36,7 @@ public class PeliculaService implements IPeliculaService{
 	@Override
 	public PeliculaModel insertOrUpdate(PeliculaModel object) {
 		Pelicula pelicula = peliculaConverter.modeloAEntidad(object);
-		return peliculaConverter.entidadAModelo(pelicula);
+		return peliculaConverter.entidadAModelo(peliculaRepository.save(pelicula));
 	}
 
 	@Override

@@ -21,4 +21,5 @@ public interface IPeliculaRepository extends JpaRepository<Pelicula, Serializabl
 	@Query(value ="select * from pelicula order by fecha desc", nativeQuery=true)
 	public abstract List<Pelicula> findAllByFechaDESC();
 	public abstract List<Pelicula> findAllByGenero(int id);
+
 }

@@ -4,16 +4,21 @@ import java.util.Set;
 
 import com.camila.challenge.entities.Pelicula;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class PersonajeModel extends PersonajeParcialModel {
 
+	@JsonView(PersonajeModel.class)
 	private int edad;
+	@JsonView(PersonajeModel.class)
 	private double peso;
+	@JsonView(PersonajeModel.class)
 	private String historia;
-	private Set<Pelicula> peliculas;
+	@JsonView(PersonajeModel.class)
+	private Set<PeliculaModel> peliculas;
+	
 	public PersonajeModel(int idPersonaje, String nombre, String imagen, int edad, double peso, String historia,
-			Set<Pelicula> peliculas) {
+			Set<PeliculaModel> peliculas) {
 		super(idPersonaje, nombre, imagen);
 		this.edad = edad;
 		this.peso = peso;
@@ -39,11 +44,10 @@ public class PersonajeModel extends PersonajeParcialModel {
 	public void setHistoria(String historia) {
 		this.historia = historia;
 	}
-	@JsonBackReference
-	public Set<Pelicula> getPeliculas() {
+	public Set<PeliculaModel> getPeliculas() {
 		return peliculas;
 	}
-	public void setPeliculas(Set<Pelicula> peliculas) {
+	public void setPeliculas(Set<PeliculaModel> peliculas) {
 		this.peliculas = peliculas;
 	}
 

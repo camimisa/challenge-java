@@ -1,12 +1,15 @@
 package com.camila.challenge.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonRootName;
+@JsonRootName(value = "Genero")
 public class GeneroModel {
 
 	@JsonIgnore
 	private int idGenero;
 	private String nombre;
+	private String imagenUrl;
+	@JsonIgnore
 	private String image;
 	
 	public GeneroModel(int idGenero, String nombre, String image) {
@@ -14,6 +17,7 @@ public class GeneroModel {
 		this.idGenero = idGenero;
 		this.nombre = nombre;
 		this.image = image;
+		this.setImagenUrl("/movies/genre/" + idGenero);
 	}
 
 	public int getIdGenero() {
@@ -38,6 +42,14 @@ public class GeneroModel {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getImagenUrl() {
+		return imagenUrl;
+	}
+
+	public void setImagenUrl(String imagenUrl) {
+		this.imagenUrl = imagenUrl;
 	}
 	
 	

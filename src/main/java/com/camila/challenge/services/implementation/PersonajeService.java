@@ -30,7 +30,7 @@ public class PersonajeService implements IPersonajeService{
 	@Override
 	public PersonajeModel insertOrUpdate(PersonajeModel object) {
 		Personaje personaje = personajeConverter.modeloAEntidad(object);
-		return personajeConverter.entidadAModelo(personaje);
+		return personajeConverter.entidadAModelo(personajeRepository.save(personaje));
 	}
 
 	@Override
@@ -68,6 +68,7 @@ public class PersonajeService implements IPersonajeService{
 	public List<PersonajeModel> findByPelicula(int idPelicula) {
 		return personajeConverter.entidadAModelo(personajeRepository.findByPelicula(idPelicula));
 	}
+
 
 
 }

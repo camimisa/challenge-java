@@ -7,14 +7,20 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.camila.challenge.entities.Rol;
 import com.camila.challenge.entities.Usuario;
 import com.camila.challenge.repositories.IUsuarioRepository;
 import com.camila.challenge.services.IUsuarioService;
-/*
+
 @Service("usuarioService")
 public class UsuarioService implements UserDetailsService, IUsuarioService {
 
@@ -44,7 +50,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public Usuario insertOrUpdate(Usuario usuario) {
 		usuario.setClave(encoder.encode(usuario.getClave()));
 		usuario.setEnabled(true);
-		return usuarioRepository.save(usuario);
+		if(this.findByEmail(usuario.getEmail()) == null)
+			usuario = usuarioRepository.save(usuario);
+		else
+			usuario = null;
+		return usuario;
 	}
 
 	@Override
@@ -60,8 +70,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario user = usuarioRepository.findByEmail(username);
-		return buildUser(user, buildGrantedAuthorities(user.getRol()));
+		Usuario usuario = usuarioRepository.findByEmail(username);
+		if (usuario == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return new User(usuario.getEmail(), usuario.getClave(), buildGrantedAuthorities());
 	}
 	
 	private User buildUser(Usuario usuario, List<GrantedAuthority> grantedAuthorities) {
@@ -70,11 +83,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 						grantedAuthorities);
 	}
 	
-	private List<GrantedAuthority> buildGrantedAuthorities(Rol rol) {
+	private List<GrantedAuthority> buildGrantedAuthorities() {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority(rol.getNombre()));
-
 		return new ArrayList<GrantedAuthority>(grantedAuthorities);
 	}
 
-}*/
+}

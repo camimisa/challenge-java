@@ -2,11 +2,14 @@ package com.camila.challenge.converters;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.camila.challenge.entities.Pelicula;
+import com.camila.challenge.entities.Personaje;
 import com.camila.challenge.models.PeliculaModel;
 
 @Component("peliculaConverter")
@@ -24,7 +27,10 @@ public class PeliculaConverter {
 	public PeliculaModel entidadAModelo(Pelicula pelicula) {
 		PeliculaModel peliculaModel = new PeliculaModel(pelicula.getIdPelicula(),pelicula.getTitulo(),pelicula.getFecha(),
 				pelicula.getImagen(),pelicula.getCalificacion(),
-					generoConverter.entidadAModelo(pelicula.getGenero()),personajeConverter.entidadAModelo(pelicula.getPersonajes()));
+					generoConverter.entidadAModelo(pelicula.getGenero()),null);
+		for(Personaje p : pelicula.getPersonajes()) {
+			peliculaModel.getPersonajes().add(personajeConverter.entidadAModelo(p));
+		}
 		
 		return peliculaModel;
 	}
@@ -32,8 +38,9 @@ public class PeliculaConverter {
 
 	public List<PeliculaModel> entidadAModelo(List<Pelicula>peliculas){
 		List<PeliculaModel> listaModels =  new ArrayList<PeliculaModel>();
-		for(Pelicula p : peliculas)
-			listaModels.add(this.entidadAModelo(p));
+		for(Pelicula p : peliculas) {
+			p.setPersonajes(null);
+			listaModels.add(this.entidadAModelo(p));}
 		return listaModels;
 	}
 
@@ -42,4 +49,5 @@ public class PeliculaConverter {
 				object.getClasificacion(),object.getFecha(), 
 				generoConverter.modeloAEntidad(object.getGenero()),personajeConverter.modeloAEntidad(object.getPersonajes()));
 	}
+
 }

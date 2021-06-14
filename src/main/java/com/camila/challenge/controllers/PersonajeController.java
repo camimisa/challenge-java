@@ -1,6 +1,5 @@
 package com.camila.challenge.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -60,10 +59,11 @@ public class PersonajeController {
 		return new ResponseEntity<List<PersonajeModel>>(personajes,HttpStatus.OK);
 	}
 	
-	@GetMapping(value="image", produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<ByteArrayResource> imagen() throws IOException{
-		final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get(("src/main/resources/static/imagenes/peliculas/loveRosie.jpg"))));
-		System.out.println(inputStream.getFilename());
+	@GetMapping(value="image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
+	public ResponseEntity<ByteArrayResource> imagen(@PathVariable("id") int id) throws IOException {
+		final String path = "src/main/resources/static/imagenes/personajes/";
+		final String imageName = personajeService.findById(id).getImagen();
+		final ByteArrayResource inputStream = new ByteArrayResource(Files.readAllBytes(Paths.get((path + "" + imageName))));
 		return ResponseEntity
                 .status(HttpStatus.OK)
                 .contentLength(inputStream.contentLength())
@@ -72,7 +72,9 @@ public class PersonajeController {
 	
 	@PostMapping
 	public ResponseEntity<PersonajeModel>create(@RequestBody PersonajeModel personaje){
-		return new ResponseEntity<PersonajeModel>(personajeService.insertOrUpdate(personaje),HttpStatus.CREATED);
+		PersonajeModel personajeM = personajeService.insertOrUpdate(personaje);
+		System.out.println(personajeM.getIdPersonaje());
+		return new ResponseEntity<PersonajeModel>(personajeM,HttpStatus.CREATED);
 	}
 	
 	@PutMapping
@@ -81,8 +83,10 @@ public class PersonajeController {
 	}
 	
 	@GetMapping("{id}")
+	@JsonView(PersonajeModel.class)
 	public ResponseEntity<PersonajeModel>info(@PathVariable("id") int id){
 		PersonajeModel personaje = personajeService.findById(id);
+		System.out.println(personaje.getPeliculas());
 		return new ResponseEntity<PersonajeModel>(personaje,HttpStatus.OK);
 	}
 	

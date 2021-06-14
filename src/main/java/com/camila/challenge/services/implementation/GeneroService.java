@@ -42,4 +42,5 @@ public class GeneroService implements IGeneroService{
 	public Genero findById(int id) {
 		return generoRepository.findByIdGenero(id);
 	}
+
 }

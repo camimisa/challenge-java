@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 
 public class PeliculaModel extends PeliculaParcialModel{
 
@@ -43,7 +44,7 @@ public class PeliculaModel extends PeliculaParcialModel{
 		this.genero = genero;
 	}
 
-	@JsonManagedReference
+	@JsonView(PeliculaModel.class)
 	public Set<PersonajeModel> getPersonajes() {
 		return personajes;
 	}

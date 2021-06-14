@@ -2,15 +2,20 @@ package com.camila.challenge.models;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.annotation.JsonView;
 
+@JsonRootName(value = "Pelicula")
 public class PeliculaParcialModel {
 	@JsonView(PeliculaParcialModel.class)
 	protected int idPelicula;
 	@JsonView(PeliculaParcialModel.class)
 	protected String titulo;
 	@JsonView(PeliculaParcialModel.class)
+	protected String imagenUrl;
+	@JsonProperty(access = Access.WRITE_ONLY)
 	protected String imagen;
 	@JsonView(PeliculaParcialModel.class)
 	protected LocalDate fecha;
@@ -23,6 +28,7 @@ public class PeliculaParcialModel {
 		this.titulo = titulo;
 		this.imagen = imagen;
 		this.fecha = fechaCreacion;
+		this.imagenUrl = "/movies/image/" + idPelicula;
 	}
 
 	public int getIdPelicula() {
@@ -56,5 +62,14 @@ public class PeliculaParcialModel {
 	public void setFecha(LocalDate fechaCreacion) {
 		this.fecha = fechaCreacion;
 	}
+
+	public String getImagenUrl() {
+		return imagenUrl;
+	}
+
+	public void setImagenUrl(String imagenUrl) {
+		this.imagenUrl = imagenUrl;
+	}
+	
 	
 }
