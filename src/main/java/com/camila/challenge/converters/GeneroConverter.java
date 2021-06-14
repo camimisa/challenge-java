@@ -9,10 +9,10 @@ import com.camila.challenge.models.GeneroModel;
 public class GeneroConverter {
 
 	public GeneroModel entidadAModelo(Genero genero) {
-		return new GeneroModel(genero.getIdGenero(), genero.getNombre(), genero.getImage());
+		return new GeneroModel(genero.getIdGenero(), genero.getNombre(), genero.getImagen());
 	}
 	
 	public Genero modeloAEntidad(GeneroModel generoModel) {
-		return new Genero(generoModel.getIdGenero(), generoModel.getNombre(), generoModel.getImage());
+		return new Genero(generoModel.getIdGenero(), generoModel.getNombre(), generoModel.getImagen());
 	}
 }

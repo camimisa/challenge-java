@@ -53,7 +53,7 @@ public class PersonajeController {
 		if(name.isBlank() && age.isBlank() && !weight.isBlank() && idMovie.isBlank())
 			personajes = personajeService.findByPeso(Double.valueOf(weight));
 		if(name.isBlank() && age.isBlank() && weight.isBlank() && !idMovie.isBlank())
-			//personajes = personajeService.findByIdMovie(Integer.valueOf(weight));
+			personajes = personajeService.findByPelicula(Integer.valueOf(idMovie));
 			System.out.println("TODO");
 		if(name.isBlank() && age.isBlank() && weight.isBlank() && idMovie.isBlank())
 			personajes = personajeService.getAll();
@@ -75,7 +75,6 @@ public class PersonajeController {
 	@PostMapping
 	public ResponseEntity<PersonajeModel>create(@Valid @RequestBody PersonajeModel personaje){
 		PersonajeModel personajeM = personajeService.insertOrUpdate(personaje);
-		System.out.println(personajeM.getIdPersonaje());
 		return new ResponseEntity<PersonajeModel>(personajeM,HttpStatus.CREATED);
 	}
 	
@@ -87,7 +86,6 @@ public class PersonajeController {
 	@GetMapping("{id}")
 	public ResponseEntity<PersonajeModel>info(@PathVariable("id") int id){
 		PersonajeModel personaje = personajeService.findById(id);
-		System.out.println(personaje.getPeliculas());
 		return new ResponseEntity<PersonajeModel>(personaje,HttpStatus.OK);
 	}
 	

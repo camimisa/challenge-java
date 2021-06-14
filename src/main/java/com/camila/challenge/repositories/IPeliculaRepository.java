@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.camila.challenge.entities.Pelicula;
@@ -18,6 +19,7 @@ public interface IPeliculaRepository extends JpaRepository<Pelicula, Serializabl
 	public abstract List<Pelicula> findAllByFechaASC();
 	@Query(value ="select * from pelicula order by fecha desc", nativeQuery=true)
 	public abstract List<Pelicula> findAllByFechaDESC();
-	public abstract List<Pelicula> findAllByGenero(int id);
+	@Query(value ="select * from pelicula where id_genero = :id", nativeQuery=true)
+	public abstract List<Pelicula> findAllByIdGenero(@Param("id")int id);
 
 }
