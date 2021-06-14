@@ -2,8 +2,6 @@ package com.camila.challenge.configuration;
 
 import com.camila.challenge.entities.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.org.apache.xerces.internal.impl.Constants;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import static com.camila.challenge.configuration.Constants.HEADER_AUTHORIZACION_KEY;
 import static com.camila.challenge.configuration.Constants.ISSUER_INFO;
 import static com.camila.challenge.configuration.Constants.SUPER_SECRET_KEY;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.camila.challenge.entities.Usuario;
 import com.camila.challenge.services.IUsuarioService;
 
+
 @RestController
 @RequestMapping("/auth/")
 public class UsuarioController {
@@ -32,5 +33,8 @@ public class UsuarioController {
 		}
 		return response;
 	}
+	
+	
+	
 	
 }
