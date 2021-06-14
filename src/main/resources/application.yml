@@ -11,6 +11,4 @@ spring:
                 strategy: org.hibernate.cfg.ImprovedNaming.Strategy
         properties:
             dialect: org.hibernate.dialect.MySQL5Dialect
-    sendgrid:
-           api-key: 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
 
