@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.camila.challenge.converters.PersonajeConverter;
 import com.camila.challenge.entities.Personaje;
+import com.camila.challenge.models.PersonajeModel;
 import com.camila.challenge.repositories.IPersonajeRepository;
 import com.camila.challenge.services.IPersonajeService;
 
@@ -17,14 +19,18 @@ public class PersonajeService implements IPersonajeService{
 	@Qualifier("personajeRepository")
 	private IPersonajeRepository personajeRepository;
 	
+	@Autowired
+	@Qualifier("personajeConverter")
+	private PersonajeConverter personajeConverter;
 	@Override
-	public List<Personaje> getAll() {
-		return personajeRepository.findAll();
+	public List<PersonajeModel> getAll() {
+		return personajeConverter.entidadAModelo(personajeRepository.findAll());
 	}
 
 	@Override
-	public Personaje insertOrUpdate(Personaje object) {
-		return personajeRepository.save(object);
+	public PersonajeModel insertOrUpdate(PersonajeModel object) {
+		Personaje personaje = personajeConverter.modeloAEntidad(object);
+		return personajeConverter.entidadAModelo(personajeRepository.save(personaje));
 	}
 
 	@Override
@@ -39,8 +45,30 @@ public class PersonajeService implements IPersonajeService{
 	}
 
 	@Override
-	public Personaje findById(int id) {
-		return personajeRepository.findByIdPersonaje(id);
+	public PersonajeModel findById(int id) {
+		return personajeConverter.entidadAModelo(personajeRepository.findByIdPersonaje(id));
 	}
+
+	@Override
+	public PersonajeModel findByNombre(String nombre) {
+		return personajeConverter.entidadAModelo(personajeRepository.findByNombre(nombre));
+	}
+
+	@Override
+	public List<PersonajeModel> findByEdad(int edad) {
+		return personajeConverter.entidadAModelo(personajeRepository.findByEdad(edad));
+	}
+
+	@Override
+	public List<PersonajeModel> findByPeso(double peso) {
+		return personajeConverter.entidadAModelo(personajeRepository.findByPeso(peso));
+	}
+
+	@Override
+	public List<PersonajeModel> findByPelicula(int idPelicula) {
+		return personajeConverter.entidadAModelo(personajeRepository.findByPelicula(idPelicula));
+	}
+
+
 
 }

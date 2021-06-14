@@ -32,6 +32,16 @@ public class Genero {
 	private LocalDateTime updatedAt;
 
 	public Genero() {}
+	
+	
+	public Genero(int idGenero, String nombre, String image) {
+		super();
+		this.idGenero = idGenero;
+		this.nombre = nombre;
+		this.image = image;
+	}
+
+
 	public int getIdGenero() {
 		return idGenero;
 	}
